@@ -1,0 +1,5 @@
+docker run --name my-mongo -d mongo //создание контейнера mongo
+docker ps //список запущенных контейнеров
+docker exec -it my-mongo bash //прямое подключение к контейнеру
+mongosh //подключение mongosh для локальной работы с системой
+docker logs my-mongo //проверка журналов
