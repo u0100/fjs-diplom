@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
 @Schema()
-export class Booking {
+export class Reservation {
   @Prop({ required: true })
   userId: string;
 
@@ -19,5 +19,5 @@ export class Booking {
   dateEnd: Date;
 }
 
-export type BookingDocument = Booking & Document;
-export const BookingSchema = SchemaFactory.createForClass(Booking);
+export type ReservationDocument = Reservation & Document;
+export const ReservationSchema = SchemaFactory.createForClass(Reservation);

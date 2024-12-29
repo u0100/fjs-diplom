@@ -1,4 +1,4 @@
-export interface BookingDto {
+export interface ReservationDto {
   userId: string;
   hotelId: string;
   roomId: string;
@@ -6,7 +6,7 @@ export interface BookingDto {
   dateEnd: Date;
 }
 
-export interface BookingSearchOptions {
+export interface ReservationSearchOptions {
   userId: string;
   dateStart: Date;
   dateEnd: Date;
