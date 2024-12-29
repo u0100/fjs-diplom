@@ -1,17 +1,9 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Param,
-  Post,
-  Query,
-  Request,
-  UseGuards,
-} from '@nestjs/common';
-import { Roles } from '../../decorators/roles.decorator';
-import { JwtAuthGuard } from '../../guard/auth.guard';
-import { RolesGuard } from '../../guard/roles.guard';
 import { ID } from '../../infrastructure/global';
+import { Body, Controller, Get, Param, Post, Query, Request, UseGuards } from '@nestjs/common';
+import { Roles } from '../../decorators/roles.decorator';
+import { RolesGuard } from '../../guard/roles.guard';
+import { JwtAuthGuard } from "../../guard/auth.guard";
+
 import { CreateSupportRequestDto } from './dto/create-support.dto';
 import { GetChatListParams } from './dto/get-requests.dto';
 import { MarkMessagesAsReadDto } from './dto/mark-message.dto';

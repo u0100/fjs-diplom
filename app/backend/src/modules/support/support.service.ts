@@ -8,7 +8,7 @@ import { EventEmitter2 } from '@nestjs/event-emitter';
 import { InjectModel } from '@nestjs/mongoose';
 import mongoose, { Model } from 'mongoose';
 import { ID } from '../../infrastructure/global';
-import { UsersService } from '../users/users.service';
+import { UserService } from '../users/users.service';
 import { GetChatListParams } from './dto/get-requests.dto';
 import { SendMessageDto } from './dto/send-message.dto';
 import { Message } from './schemas/message.schema';
@@ -20,7 +20,7 @@ export class SupportService {
   constructor(
     @InjectModel(Support.name) private supportModel: Model<Support>,
     @InjectModel(Message.name) private messageModel: Model<Message>,
-    private usersService: UsersService,
+    private usersService: UserService,
     private socketService: SocketService,
     private eventEmitter: EventEmitter2,
   ) {}

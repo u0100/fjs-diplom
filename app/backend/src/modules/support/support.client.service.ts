@@ -1,12 +1,8 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { ID } from '../../infrastructure/global';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import mongoose, { Model } from 'mongoose';
-import { ID } from '../../infrastructure/global';
-import { UsersService } from '../users/users.service';
+import { UserService } from '../users/users.service';
 import { CreateSupportRequestDto } from './dto/create-support.dto';
 import { MarkMessagesAsReadDto } from './dto/mark-message.dto';
 import { Message } from './schemas/message.schema';
@@ -16,7 +12,7 @@ import { Support } from './schemas/support.schema';
 export class SupportClientService {
   constructor(
     @InjectModel(Support.name) private supportModel: Model<Support>,
-    private usersService: UsersService,
+    private userService: UserService,
   ) {}
 
   async createSupportRequest(
@@ -24,12 +20,12 @@ export class SupportClientService {
   ): Promise<Support> {
     const isValidUserId = mongoose.isValidObjectId(createSupportDto.userId);
     if (!isValidUserId) {
-      throw new BadRequestException('Некорректный ID пользователя!');
+      throw new BadRequestException('Incorrect user ID');
     }
 
-    const user = await this.usersService.findById(createSupportDto.userId);
+    const user = await this.userService.findById(createSupportDto.userId);
     if (!user) {
-      throw new NotFoundException('Пользователь с данным ID не найден!');
+      throw new NotFoundException('User ID not found');
     }
 
     try {
@@ -46,7 +42,7 @@ export class SupportClientService {
   async markMessagesAsRead(params: MarkMessagesAsReadDto) {
     const isValidSupportId = mongoose.isValidObjectId(params.supportRequestId);
     if (!isValidSupportId) {
-      throw new BadRequestException('Некорректный ID обращения!');
+      throw new BadRequestException('Incorrect request ID');
     }
 
     const supportRequest = await this.supportModel
@@ -54,7 +50,7 @@ export class SupportClientService {
       .select('-__v')
       .exec();
     if (!supportRequest) {
-      throw new NotFoundException('Обращение с данным ID не найдено!');
+      throw new NotFoundException('No case found with this ID');
     }
 
     try {
@@ -74,7 +70,7 @@ export class SupportClientService {
   async getUnreadCount(supportRequestId: ID): Promise<Message[]> {
     const isValidSupportId = mongoose.isValidObjectId(supportRequestId);
     if (!isValidSupportId) {
-      throw new BadRequestException('Некорректный ID обращения!');
+      throw new BadRequestException('Incorrect request ID');
     }
 
     const supportRequest = await this.supportModel
@@ -82,7 +78,7 @@ export class SupportClientService {
       .select('-__v')
       .exec();
     if (!supportRequest) {
-      throw new NotFoundException('Обращение с данным ID не найдено!');
+      throw new NotFoundException('No case found with this ID');
     }
 
     return supportRequest.messages.filter((message) => !message.readAt) || [];

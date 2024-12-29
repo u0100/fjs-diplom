@@ -1,6 +1,6 @@
+import { ID } from '../../../infrastructure/global';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document, HydratedDocument } from 'mongoose';
-import { ID } from '../../../infrastructure/global';
 
 export type MessageDocument = HydratedDocument<Message>;
 

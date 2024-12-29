@@ -1,12 +1,7 @@
-import {
-  ConnectedSocket,
-  MessageBody,
-  SubscribeMessage,
-  WebSocketGateway,
-} from '@nestjs/websockets';
-import { Socket } from 'socket.io';
 import { ID } from '../../infrastructure/global';
-import { UsersService } from '../users/users.service';
+import { ConnectedSocket, MessageBody, SubscribeMessage, WebSocketGateway } from '@nestjs/websockets';
+import { Socket } from 'socket.io';
+import { UserService } from '../users/users.service';
 import { SupportService } from './support.service';
 
 @WebSocketGateway({
@@ -17,7 +12,7 @@ import { SupportService } from './support.service';
 export class SupportGateway {
   constructor(
     private supportService: SupportService,
-    private usersService: UsersService,
+    private usersService: UserService,
   ) {}
 
   @SubscribeMessage('subscribeToChat')

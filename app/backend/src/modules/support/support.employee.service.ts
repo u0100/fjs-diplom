@@ -1,11 +1,7 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { ID } from 'src/infrastructure/global';
+import {BadRequestException, NotFoundException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import mongoose, { Model } from 'mongoose';
-import { ID } from 'src/infrastructure/global';
 import { MarkMessagesAsReadDto } from './dto/mark-message.dto';
 import { Message } from './schemas/message.schema';
 import { Support } from './schemas/support.schema';
@@ -19,7 +15,7 @@ export class SupportEmployeeService {
   async markMessagesAsRead(params: MarkMessagesAsReadDto) {
     const isValidSupportId = mongoose.isValidObjectId(params.supportRequestId);
     if (!isValidSupportId) {
-      throw new BadRequestException('Некорректный ID обращения!');
+      throw new BadRequestException('Incorrect request ID');
     }
 
     const supportRequest = await this.supportModel
@@ -27,7 +23,7 @@ export class SupportEmployeeService {
       .select('-__v')
       .exec();
     if (!supportRequest) {
-      throw new NotFoundException('Обращение с данным ID не найдено!');
+      throw new NotFoundException('No request with this ID found');
     }
 
     try {
@@ -47,7 +43,7 @@ export class SupportEmployeeService {
   async getUnreadCount(supportRequestId: ID): Promise<Message[]> {
     const isValidSupportId = mongoose.isValidObjectId(supportRequestId);
     if (!isValidSupportId) {
-      throw new BadRequestException('Некорректный ID обращения!');
+      throw new BadRequestException('Incorrect request ID');
     }
 
     const supportRequest = await this.supportModel
@@ -55,7 +51,7 @@ export class SupportEmployeeService {
       .select('-__v')
       .exec();
     if (!supportRequest) {
-      throw new NotFoundException('Обращение с данным ID не найдено!');
+      throw new NotFoundException('No request with this ID found');
     }
 
     return supportRequest.messages.filter((message) => !message.readAt) || [];
@@ -64,7 +60,7 @@ export class SupportEmployeeService {
   async closeRequest(supportRequestId: ID): Promise<void> {
     const isValidSupportId = mongoose.isValidObjectId(supportRequestId);
     if (!isValidSupportId) {
-      throw new BadRequestException('Некорректный ID обращения!');
+      throw new BadRequestException('Incorrect request ID');
     }
 
     const supportRequest = await this.supportModel
@@ -72,7 +68,7 @@ export class SupportEmployeeService {
       .select('-__v')
       .exec();
     if (!supportRequest) {
-      throw new NotFoundException('Обращение с данным ID не найдено!');
+      throw new NotFoundException('No request with this ID found');
     }
 
     try {
