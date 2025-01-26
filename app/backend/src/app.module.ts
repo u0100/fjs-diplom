@@ -1,16 +1,19 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { ConfigModule } from "@nestjs/config";
 import { MongooseModule } from '@nestjs/mongoose';
 import { EventEmitterModule } from '@nestjs/event-emitter';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 import { AppGateway } from './app.gateway';
 import { AuthModule } from './modules/auth/auth.module';
 import { HotelroomsModule } from './modules/hotelrooms/hotelrooms.module';
 import { HotelsModule } from './modules/hotels/hotels.module';
-import { ReservationsModule } from './modules/reservations/reservations.module';
+import { ReservationModule } from './modules/reservations/reservation.module';
 import { SocketModule } from './modules/socket/socket.module';
 import { SupportModule } from './modules/support/support.module';
-import { UsersModule } from './modules/users/users.module';
+import { UserModule } from './modules/users/users.module';
+
+let process;
 
 @Module({
   imports: [
@@ -25,11 +28,11 @@ import { UsersModule } from './modules/users/users.module';
         verboseMemoryLeak: false,
         ignoreErrors: false,
     }),
-      UsersModule,
+      UserModule,
       AuthModule,
       HotelsModule,
       HotelroomsModule,
-      ReservationsModule,
+      ReservationModule,
       SupportModule,
       SocketModule,
   ],
