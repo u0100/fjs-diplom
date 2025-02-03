@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { InjectModel } from '@nestjs/mongoose';
-import mongoose, { Model } from 'mongoose';
+import mongoose, {Model, Schema} from 'mongoose';
 import { ID } from '../../infrastructure/global';
 import { UserService } from '../users/users.service';
 import { GetChatListParams } from './dto/get-requests.dto';
@@ -32,7 +32,11 @@ export class SupportService {
       .select('-__v');
   }
 
-  async sendMessage(sendMessageDto: SendMessageDto): Promise<Message> {
+  async sendMessage(sendMessageDto: {
+    supportRequestId: unknown;
+    text: string;
+    authorId: string | Schema.Types.ObjectId
+  }): Promise<Message> {
     const { supportRequestId, authorId, text } = sendMessageDto;
     const isValidSupportId = mongoose.isValidObjectId(supportRequestId);
     if (!isValidSupportId) {

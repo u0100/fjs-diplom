@@ -17,9 +17,10 @@ export class UserController {
   }
 
   @Get(':id')
-  async findById(@Param('id') id: string): Promise<User> {
+  async findById(@Param('id') id: string | ObjectId): Promise<User> {
+    //const objectId = typeof id === 'string' ? new ObjectId(id) : id;
     try {
-      const user = await this.userService.findById(new ObjectId(id));
+      const user = await this.userService.findById(new ObjectId(id).toString());
       if (!user) {
         throw new HttpException('User not found', HttpStatus.NOT_FOUND);
       }

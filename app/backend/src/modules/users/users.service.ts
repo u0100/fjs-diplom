@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User, UserDocument } from './schema/users.schema';
 import { ObjectId } from 'mongodb';
+import {ID} from "../../infrastructure/global";
 
 export interface SearchUserParams {
   limit: number;
@@ -14,7 +15,8 @@ export interface SearchUserParams {
 
 export interface IUserService {
   create(data: Partial<User>): Promise<User>;
-  findById(id: ObjectId): Promise<User>;
+
+  findById(id: ID): Promise<User>;
   findByEmail(email: string): Promise<User>;
   findAll(params: SearchUserParams): Promise<User[]>;
 }
@@ -28,7 +30,7 @@ export class UserService implements IUserService {
     return user.save();
   }
 
-  async findById(id: ObjectId): Promise<User> {
+  async findById(id: ID): Promise<User> {
     return this.userModel.findById(id).exec();
   }
 

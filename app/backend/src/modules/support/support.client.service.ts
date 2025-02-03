@@ -67,7 +67,7 @@ export class SupportClientService {
     }
   }
 
-  async getUnreadCount(supportRequestId: ID): Promise<Message[]> {
+  async getUnreadCount(supportRequestId: unknown): Promise<Message[]> {
     const isValidSupportId = mongoose.isValidObjectId(supportRequestId);
     if (!isValidSupportId) {
       throw new BadRequestException('Incorrect request ID');
