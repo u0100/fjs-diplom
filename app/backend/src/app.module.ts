@@ -17,7 +17,14 @@ let process;
 
 @Module({
   imports: [
-      MongooseModule.forRoot(process.env.MONGO_URL),
+      //MongooseModule.forRoot(process.env.MONGO_URL),
+      MongooseModule.forRootAsync({
+        imports: [ConfigModule],
+        inject: [ConfigService],
+        useFactory: async (config: ConfigService) => ({
+          uri: config.get<string>('MONGODB_URI'),
+        })
+      }),
       ConfigModule.forRoot({ envFilePath: '.env', isGlobal: true }),
       EventEmitterModule.forRoot({
         wildcard: true,
