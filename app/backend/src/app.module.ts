@@ -12,6 +12,7 @@ import { ReservationModule } from './modules/reservations/reservation.module';
 import { SocketModule } from './modules/socket/socket.module';
 import { SupportModule } from './modules/support/support.module';
 import { UserModule } from './modules/users/users.module';
+import { ConfigService } from '@nestjs/config';
 
 let process;
 
