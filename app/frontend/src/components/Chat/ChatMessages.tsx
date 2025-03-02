@@ -13,9 +13,11 @@ function ChatMessages(data: propData) {
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth", block: "end" })
-    messagesEndRef.current.scrollTop = 99999
-  }
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
+      messagesEndRef.current.scrollTop = 99999;
+    }
+  };
 
   useEffect(() => {
     scrollToBottom()
