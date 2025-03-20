@@ -23,7 +23,7 @@ let process;
         imports: [ConfigModule],
         inject: [ConfigService],
         useFactory: async (config: ConfigService) => ({
-          uri: config.get<string>('MONGODB_URI'),
+          uri: config.get<string>('MONGO_URL'),
         })
       }),
       ConfigModule.forRoot({ envFilePath: '.env', isGlobal: true }),

@@ -3,3 +3,8 @@ docker ps //список запущенных контейнеров
 docker exec -it my-mongo bash //прямое подключение к контейнеру
 mongosh //подключение mongosh для локальной работы с системой
 docker logs my-mongo //проверка журналов
+
+docker-compose up --build
+   
+docker-compose -f docker-compose.dev.yml up --build -d
+docker-compose -f docker-compose.dev.yml logs app-frontend

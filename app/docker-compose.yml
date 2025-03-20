@@ -1,3 +1,10 @@
+networks:
+  app:
+    driver: bridge
+
+volumes:
+  mongo_data:
+
 services:
   backend:
     build:
@@ -8,8 +15,8 @@ services:
     environment:
       - HTTP_PORT=3000
       - MONGO_URL=mongodb://mongo:27017/my-mongo
-      - JWT_SECRET=secret
-      - JWT_EXPIRES=365d
+      - JWT_SECRET=ad5c3c32b777914b6115e80c0c02e2dc9c11ec0a7f6455db24c3790aadfd9b50
+      - JWT_EXPIRES=31536000
     networks:
       - app
     depends_on:
@@ -28,9 +35,9 @@ services:
       context: ./frontend
       dockerfile: ./Dockerfile.front
     ports:
-      - 5173:5173
-    volumes:
-      - ./frontend:/app
+      - 5173:4173
+    #volumes:
+     # - ./frontend:/app
     environment:
       - VITE_MAIN_URL=http://backend:3000/api
       - VITE_SERVER_URL=http://backend:3000
@@ -38,11 +45,4 @@ services:
       - backend
     networks:
       - app
-
-networks:
-  app:
-    driver: bridge
-
-volumes:
-  mongo_data:
 
